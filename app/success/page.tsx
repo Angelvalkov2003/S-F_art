@@ -1,6 +1,6 @@
 "use client";
 
-import { useCartStore } from "@/store/cart-store";
+import { useCartStore, CartItem } from "@/store/cart-store";
 import Link from "next/link";
 import { useEffect, useState, useRef } from "react";
 
@@ -35,12 +35,14 @@ export default function SuccessPage() {
         const orderItemsStr = sessionStorage.getItem("orderItems");
 
         // Try to get items from sessionStorage first, fallback to cart
-        let currentItems = [];
+        let currentItems: CartItem[] = [];
         if (orderItemsStr) {
           try {
-            currentItems = JSON.parse(orderItemsStr);
+            currentItems = JSON.parse(orderItemsStr) as CartItem[];
           } catch (e) {
-            console.warn("[Success Page] Failed to parse orderItems from storage, using cart items");
+            console.warn(
+              "[Success Page] Failed to parse orderItems from storage, using cart items"
+            );
             currentItems = [...items];
           }
         } else {
@@ -55,7 +57,7 @@ export default function SuccessPage() {
 
         const shippingData: ShippingData = JSON.parse(shippingDataStr);
         const total = currentItems.reduce(
-          (acc, item) => acc + item.price * item.quantity,
+          (acc: number, item: CartItem) => acc + item.price * item.quantity,
           0
         );
 
@@ -95,12 +97,15 @@ export default function SuccessPage() {
             sessionStorage.removeItem("shippingData");
             sessionStorage.removeItem("orderItems");
           } else {
-            console.error("[Success Page] Failed to send order email:", responseData);
+            console.error(
+              "[Success Page] Failed to send order email:",
+              responseData
+            );
             setEmailError(true);
           }
         } catch (fetchError: any) {
           clearTimeout(timeoutId);
-          if (fetchError.name === 'AbortError') {
+          if (fetchError.name === "AbortError") {
             console.error("[Success Page] Request timeout");
             setEmailError(true);
           } else {
@@ -135,7 +140,8 @@ export default function SuccessPage() {
       )}
       {emailError && (
         <p className="mb-4 text-yellow-600">
-          Поръчката е успешна, но има проблем с изпращането на имейл. Моля, свържете се с нас.
+          Поръчката е успешна, но има проблем с изпращането на имейл. Моля,
+          свържете се с нас.
         </p>
       )}
       <Link href="/products" className="text-blue-600 hover:underline">

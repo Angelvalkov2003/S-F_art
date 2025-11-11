@@ -1,7 +1,6 @@
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { Carousel } from "@/components/carousel";
 import { getProductsList } from "@/data/products";
 
 export default async function Home() {
@@ -46,11 +45,6 @@ export default async function Home() {
           )}
         </div>
       </section>
-      {products.data && products.data.length > 0 && (
-        <section className="py-8">
-          <Carousel products={products.data} />
-        </section>
-      )}
     </div>
   );
 }

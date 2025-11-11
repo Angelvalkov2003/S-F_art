@@ -37,9 +37,6 @@ export const Navbar = () => {
           <Link href="/products" className="hover:text-blue-600">
             Продукти
           </Link>
-          <Link href="/checkout" className="hover:text-blue-600">
-            Количка
-          </Link>
         </div>
         <div className="flex items-center space-x-4">
           <Link href="/checkout" className="relative">
@@ -74,11 +71,6 @@ export const Navbar = () => {
             <li>
               <Link href="/products" className="block hover:text-blue-600">
                 Продукти
-              </Link>
-            </li>
-            <li>
-              <Link href="/checkout" className="block hover:text-blue-600">
-                Количка
               </Link>
             </li>
           </ul>
