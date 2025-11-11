@@ -53,6 +53,7 @@ export async function POST(request: Request) {
     // Format HTML email
     const htmlContent = `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+        <h1 style="color: #333; margin-bottom: 10px;">S&F Art</h1>
         <h2 style="color: #333; border-bottom: 2px solid #4CAF50; padding-bottom: 10px;">
           Нова успешна поръчка
         </h2>
@@ -105,7 +106,7 @@ export async function POST(request: Request) {
     const { data, error } = await resend.emails.send({
       from: 'avoex@resend.dev',
       to: 'avoex.contact@gmail.com',
-      subject: `Нова успешна поръчка от ${firstName} ${lastName}`,
+      subject: `S&F Art - Нова успешна поръчка от ${firstName} ${lastName}`,
       html: htmlContent,
     });
 

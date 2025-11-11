@@ -3,7 +3,7 @@ import "./globals.css";
 import { Navbar } from "@/components/navbar";
 
 export const metadata: Metadata = {
-  title: "Моят магазин",
+  title: "S&F Art",
   description: "Купувайте качествени продукти",
 };
 

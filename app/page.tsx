@@ -8,23 +8,23 @@ export default async function Home() {
 
   return (
     <div>
-      <section className="rounded bg-neutral-100 py-8 sm:py-12">
+      <section className="rounded-3xl bg-gradient-to-br from-pink-50 via-purple-50 to-pink-100 py-12 sm:py-16 shadow-lg border border-pink-100">
         <div className="mx-auto grid grid-cols-1 items-center justify-items-center gap-8 px-8 sm:px-16 md:grid-cols-2">
-          <div className="max-w-md space-y-4">
-            <h2 className="text-3xl font-bold tracking-tight md:text-4xl">
-              Добре дошли в нашия магазин
+          <div className="max-w-md space-y-6">
+            <h2 className="text-4xl font-bold tracking-tight md:text-5xl bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">
+              Добре дошли в S&F Art
             </h2>
-            <p className="text-neutral-600">
+            <p className="text-gray-700 text-lg leading-relaxed">
               Открийте най-новите продукти на най-добрите цени.
             </p>
             <Button
               asChild
               variant="default"
-              className="inline-flex items-center justify-center rounded-full px-6 py-3 bg-black text-white"
+              className="inline-flex items-center justify-center rounded-full px-8 py-4 bg-gradient-to-r from-pink-500 to-purple-500 text-white hover:from-pink-600 hover:to-purple-600 shadow-lg hover:shadow-xl transition-all transform hover:scale-105 text-lg font-semibold"
             >
               <Link
                 href="/products"
-                className="inline-flex items-center justify-center rounded-full px-6 py-3"
+                className="inline-flex items-center justify-center rounded-full px-8 py-4"
               >
                 Разгледай всички продукти
               </Link>
@@ -34,13 +34,13 @@ export default async function Home() {
             <Image
               alt="Главно изображение"
               src={products.data[0].images[0]}
-              className="rounded"
+              className="rounded-3xl shadow-2xl border-4 border-pink-200"
               width={450}
               height={450}
             />
           ) : (
-            <div className="flex items-center justify-center w-[450px] h-[450px] bg-neutral-200 rounded">
-              <p className="text-neutral-500">Няма налично изображение</p>
+            <div className="flex items-center justify-center w-[450px] h-[450px] bg-gradient-to-br from-pink-100 to-purple-100 rounded-3xl border-4 border-pink-200">
+              <p className="text-gray-500 text-lg">Няма налично изображение</p>
             </div>
           )}
         </div>

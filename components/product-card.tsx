@@ -1,47 +1,79 @@
+"use client";
+
 import Link from "next/link";
 import Stripe from "stripe";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import Image from "next/image";
 import { Button } from "./ui/button";
+import { useCartStore } from "@/store/cart-store";
 
 interface Props {
   product: Stripe.Product;
 }
 
 export const ProductCard = ({ product }: Props) => {
+  const { addItem } = useCartStore();
   const price = product.default_price as Stripe.Price;
 
+  const onAddToCart = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (price && price.unit_amount) {
+      addItem({
+        id: product.id,
+        name: product.name,
+        price: price.unit_amount as number,
+        imageUrl: product.images ? product.images[0] : null,
+        quantity: 1,
+      });
+    }
+  };
+
   return (
-    <Link href={`/products/${product.id}`} className="block h-full">
-      <Card className="group hover:shadow-2xl transition duration-300 py-0 h-full flex flex-col border-gray-300 gap-0">
-        {product.images && product.images[0] && (
-          <div className="relative h-60 w-full">
-            <Image
-              src={product.images[0]}
-              alt={product.name}
-              layout="fill"
-              objectFit="cover"
-              className="group-hover:opacity-90 transition-opacity duration-300 rounded-t-lg"
-            />
-          </div>
-        )}
-        <CardHeader className="p-4">
-          <CardTitle className="text-xl font-bold text-gray-800">
-            {product.name}
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="p-4 flex-grow flex flex-col justify-between">
+    <Card className="group hover:shadow-2xl transition-all duration-300 py-0 h-full flex flex-col border-2 border-pink-200 gap-0 rounded-2xl overflow-hidden bg-gradient-to-b from-white to-pink-50 hover:border-pink-300 hover:scale-105">
+        <Link href={`/products/${product.id}`} className="block">
+          {product.images && product.images[0] && (
+            <div className="relative h-60 w-full overflow-hidden">
+              <Image
+                src={product.images[0]}
+                alt={product.name}
+                layout="fill"
+                objectFit="cover"
+                className="group-hover:opacity-90 transition-opacity duration-300 group-hover:scale-110"
+              />
+            </div>
+          )}
+          <CardHeader className="p-4 bg-gradient-to-b from-pink-50 to-white">
+            <CardTitle className="text-xl font-bold text-gray-800">
+              {product.name}
+            </CardTitle>
+          </CardHeader>
+        </Link>
+        <CardContent className="p-4 flex-grow flex flex-col justify-between bg-white">
           {product.description && (
             <p className="text-gray-600 text-sm mb-2">{product.description}</p>
           )}
           {price && price.unit_amount && (
-            <p className="text-lg font-semibold text-gray-900">
+            <p className="text-2xl font-bold bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">
               {(price.unit_amount / 100).toFixed(2)} лв.
             </p>
           )}
-          <Button className="mt-4 bg-black text-white">Виж детайли</Button>
+          <div className="mt-4 flex gap-2">
+            <Button 
+              onClick={onAddToCart} 
+              className="flex-1 bg-gradient-to-r from-pink-500 to-purple-500 text-white hover:from-pink-600 hover:to-purple-600 rounded-full shadow-md hover:shadow-lg transition-all transform hover:scale-105"
+            >
+              Добави в количката
+            </Button>
+            <Button 
+              asChild 
+              variant="outline" 
+              className="flex-1 rounded-full border-2 border-pink-300 text-pink-600 hover:bg-pink-50 transition-all"
+            >
+              <Link href={`/products/${product.id}`}>Виж детайли</Link>
+            </Button>
+          </div>
         </CardContent>
       </Card>
-    </Link>
   );
 };
