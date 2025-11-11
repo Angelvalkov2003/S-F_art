@@ -7,12 +7,14 @@ import {
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { useCartStore } from "@/store/cart-store";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Button } from "./ui/button";
 export const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState<boolean>(false);
   const { items } = useCartStore();
   const cartCount = items.reduce((acc, item) => acc + item.quantity, 0);
+  const [isAnimating, setIsAnimating] = useState(false);
+  const prevCartCountRef = useRef(cartCount);
 
   useEffect(() => {
     const handleResize = () => {
@@ -25,6 +27,17 @@ export const Navbar = () => {
 
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  // Animate cart icon when item is added
+  useEffect(() => {
+    if (cartCount > prevCartCountRef.current) {
+      setIsAnimating(true);
+      setTimeout(() => {
+        setIsAnimating(false);
+      }, 600);
+    }
+    prevCartCountRef.current = cartCount;
+  }, [cartCount]);
 
   return (
     <nav className="sticky top-0 z-50 bg-gradient-to-r from-pink-50 via-rose-50 to-orange-50 shadow-md border-b border-pink-100">
@@ -57,7 +70,11 @@ export const Navbar = () => {
         </div>
         <div className="flex items-center space-x-4">
           <Link href="/checkout" className="relative">
-            <ShoppingCartIcon className="h-6 w-6 text-pink-400 hover:text-pink-500 transition-colors" />
+            <ShoppingCartIcon
+              className={`h-6 w-6 text-pink-400 hover:text-pink-500 transition-all duration-300 ${
+                isAnimating ? "scale-125" : "scale-100"
+              }`}
+            />
             {cartCount > 0 && (
               <span className="absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-pink-400 text-xs text-white font-bold shadow-md">
                 {cartCount}

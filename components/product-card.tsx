@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import Image from "next/image";
 import { Button } from "./ui/button";
 import { useCartStore } from "@/store/cart-store";
+import { useState } from "react";
 
 interface Props {
   product: Stripe.Product;
@@ -14,6 +15,8 @@ interface Props {
 export const ProductCard = ({ product }: Props) => {
   const { addItem } = useCartStore();
   const price = product.default_price as Stripe.Price;
+  const [isAdded, setIsAdded] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false);
 
   const onAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -26,6 +29,20 @@ export const ProductCard = ({ product }: Props) => {
         imageUrl: product.images ? product.images[0] : null,
         quantity: 1,
       });
+      
+      // Trigger animation
+      setIsAnimating(true);
+      setIsAdded(true);
+      
+      // Reset animation after it completes
+      setTimeout(() => {
+        setIsAnimating(false);
+      }, 600);
+      
+      // Reset added state after showing message
+      setTimeout(() => {
+        setIsAdded(false);
+      }, 2000);
     }
   };
 
@@ -58,13 +75,17 @@ export const ProductCard = ({ product }: Props) => {
               {(price.unit_amount / 100).toFixed(2)} лв.
             </p>
           )}
-          <div className="mt-4 flex gap-2">
-            <Button 
-              onClick={onAddToCart} 
-              className="flex-1 bg-gradient-to-r from-pink-400 to-orange-300 text-white hover:from-pink-500 hover:to-orange-400 rounded-full shadow-md hover:shadow-lg transition-all transform hover:scale-105"
-            >
-              Добави в количката
-            </Button>
+          <div className="mt-4 flex gap-2 relative">
+            <div className="flex-1 relative">
+              <Button
+                onClick={onAddToCart}
+                className={`w-full bg-pink-400 text-white hover:bg-pink-500 rounded-full shadow-md hover:shadow-lg transition-all ${
+                  isAnimating ? 'scale-95' : 'transform hover:scale-105'
+                }`}
+              >
+                {isAdded ? '✓ Добавено!' : 'Добави в количката'}
+              </Button>
+            </div>
             <Button 
               asChild 
               variant="outline" 

@@ -2,7 +2,8 @@
 
 import { useCartStore, CartItem } from "@/store/cart-store";
 import Link from "next/link";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 
 interface ShippingData {
   firstName: string;
@@ -14,13 +15,20 @@ interface ShippingData {
   econtOffice: string;
 }
 
-export default function SuccessPage() {
+function SuccessPageContent() {
   const { items, clearCart } = useCartStore();
   const [emailSent, setEmailSent] = useState(false);
   const [emailError, setEmailError] = useState(false);
   const hasProcessed = useRef(false);
+  const searchParams = useSearchParams();
+  const isCashOnDelivery = searchParams.get("payment") === "cash-on-delivery";
 
   useEffect(() => {
+    // If cash on delivery, skip email sending
+    if (isCashOnDelivery) {
+      return;
+    }
+
     // Prevent multiple executions
     if (hasProcessed.current) {
       return;
@@ -125,39 +133,54 @@ export default function SuccessPage() {
 
     sendOrderEmail();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // Empty dependency array - run only once
+  }, [isCashOnDelivery]); // Run when cash on delivery status changes
 
   return (
     <div className="container mx-auto px-4 py-12 max-w-3xl">
       <div className="text-center mb-8">
         <h1 className="text-5xl font-bold mb-6 bg-gradient-to-r from-pink-400 to-orange-300 bg-clip-text text-transparent">
-          Плащането е успешно!
+          {isCashOnDelivery
+            ? "Нашия екип обработва покупката"
+            : "Плащането е успешно!"}
         </h1>
       </div>
 
       <div className="bg-gradient-to-br from-pink-50 via-rose-50 to-orange-50 p-8 md:p-12 rounded-3xl border-2 border-pink-200 shadow-lg">
         <div className="space-y-6 text-lg text-gray-700 leading-relaxed text-center">
-          <p className="text-2xl font-semibold text-gray-800 mb-6">
-            Благодарим ви за покупката.
-          </p>
-          <p>В кратък срок ще се свържем с вас.</p>
-          <p>
-            Ако имате проблеми или забавяне пишете на{" "}
-            <a
-              href="mailto:s_fart@abv.bg"
-              className="text-pink-600 hover:text-pink-700 font-medium underline transition-colors"
-            >
-              s_fart@abv.bg
-            </a>{" "}
-            или се обадете на{" "}
-            <a
-              href="tel:+359899037420"
-              className="text-pink-600 hover:text-pink-700 font-medium underline transition-colors"
-            >
-              0899037420
-            </a>
-            .
-          </p>
+          {isCashOnDelivery ? (
+            <>
+              <p className="text-2xl font-semibold text-gray-800 mb-6">
+                Благодарим ви за покупката.
+              </p>
+              <p className="text-xl text-gray-800 mb-4">
+                Човек ще се свърже с вас за да ви обясни процедурата за плащане.
+              </p>
+            </>
+          ) : (
+            <>
+              <p className="text-2xl font-semibold text-gray-800 mb-6">
+                Благодарим ви за покупката.
+              </p>
+              <p>В кратък срок ще се свържем с вас.</p>
+              <p>
+                Ако имате проблеми или забавяне пишете на{" "}
+                <a
+                  href="mailto:s_fart@abv.bg"
+                  className="text-pink-600 hover:text-pink-700 font-medium underline transition-colors"
+                >
+                  s_fart@abv.bg
+                </a>{" "}
+                или се обадете на{" "}
+                <a
+                  href="tel:+359899037420"
+                  className="text-pink-600 hover:text-pink-700 font-medium underline transition-colors"
+                >
+                  0899037420
+                </a>
+                .
+              </p>
+            </>
+          )}
         </div>
       </div>
 
@@ -182,5 +205,21 @@ export default function SuccessPage() {
         </Link>
       </div>
     </div>
+  );
+}
+
+export default function SuccessPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="container mx-auto px-4 py-12 max-w-3xl text-center">
+          <h1 className="text-5xl font-bold mb-6 bg-gradient-to-r from-pink-400 to-orange-300 bg-clip-text text-transparent">
+            Зареждане...
+          </h1>
+        </div>
+      }
+    >
+      <SuccessPageContent />
+    </Suspense>
   );
 }

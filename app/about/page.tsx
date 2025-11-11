@@ -31,7 +31,7 @@ export default function AboutPage() {
         {/* Content Card */}
         <div className="relative z-10 p-8 md:p-12 flex items-center justify-center min-h-[600px]">
           <div className="bg-gradient-to-br from-pink-200/80 via-rose-200/80 to-orange-200/80 backdrop-blur-sm p-8 md:p-12 rounded-3xl border-2 border-pink-300/50 shadow-xl max-w-4xl w-full">
-            <div className="text-lg text-gray-800 leading-relaxed space-y-5">
+            <div className="text-lg text-gray-800 leading-relaxed space-y-5 text-justify">
               <p>
                 Всичко започна с желание да внесем повече уют и смисъл в ежедневието.
               </p>
@@ -53,16 +53,15 @@ export default function AboutPage() {
       </div>
 
       <div className="mt-16">
-        <h2 className="text-3xl font-semibold mb-8 text-center bg-gradient-to-r from-pink-400 to-orange-300 bg-clip-text text-transparent">Свържете се с нас</h2>
         <div className="flex flex-wrap justify-center items-center gap-8">
           {/* Email */}
           <a
             href="mailto:s_fart@abv.bg"
-            className="flex flex-col items-center gap-2 p-6 rounded-2xl bg-gradient-to-br from-pink-50 to-orange-50 border-2 border-pink-200 hover:border-pink-400 hover:shadow-lg transition-all transform hover:scale-105"
+            className="flex flex-col items-center justify-center gap-2 p-6 rounded-2xl bg-gradient-to-br from-pink-50 to-orange-50 border-2 border-pink-200 hover:border-pink-400 hover:shadow-lg transition-all transform hover:scale-105 w-32 h-32"
             aria-label="Имейл"
           >
             <EnvelopeIcon className="h-10 w-10 text-pink-400" />
-            <span className="text-sm text-gray-700 font-medium">s_fart@abv.bg</span>
+            <span className="text-sm text-gray-700 font-medium text-center">s_fart@abv.bg</span>
           </a>
 
           {/* Facebook */}
@@ -70,7 +69,7 @@ export default function AboutPage() {
             href="https://www.facebook.com/share/1BH1LU1GvJ"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex flex-col items-center gap-2 p-6 rounded-2xl bg-gradient-to-br from-pink-50 to-orange-50 border-2 border-pink-200 hover:border-pink-400 hover:shadow-lg transition-all transform hover:scale-105"
+            className="flex flex-col items-center justify-center gap-2 p-6 rounded-2xl bg-gradient-to-br from-pink-50 to-orange-50 border-2 border-pink-200 hover:border-pink-400 hover:shadow-lg transition-all transform hover:scale-105 w-32 h-32"
             aria-label="Facebook"
           >
             <svg
@@ -85,7 +84,7 @@ export default function AboutPage() {
                 clipRule="evenodd"
               />
             </svg>
-            <span className="text-sm text-gray-700 font-medium">Facebook</span>
+            <span className="text-sm text-gray-700 font-medium text-center">Facebook</span>
           </a>
 
           {/* Instagram */}
@@ -93,7 +92,7 @@ export default function AboutPage() {
             href="https://www.instagram.com/s_f_art/"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex flex-col items-center gap-2 p-6 rounded-2xl bg-gradient-to-br from-pink-50 to-orange-50 border-2 border-pink-200 hover:border-pink-400 hover:shadow-lg transition-all transform hover:scale-105"
+            className="flex flex-col items-center justify-center gap-2 p-6 rounded-2xl bg-gradient-to-br from-pink-50 to-orange-50 border-2 border-pink-200 hover:border-pink-400 hover:shadow-lg transition-all transform hover:scale-105 w-32 h-32"
             aria-label="Instagram"
           >
             <svg
@@ -108,17 +107,17 @@ export default function AboutPage() {
                 clipRule="evenodd"
               />
             </svg>
-            <span className="text-sm text-gray-700 font-medium">Instagram</span>
+            <span className="text-sm text-gray-700 font-medium text-center">Instagram</span>
           </a>
 
           {/* Phone */}
           <a
             href="tel:+359899037420"
-            className="flex flex-col items-center gap-2 p-6 rounded-2xl bg-gradient-to-br from-pink-50 to-orange-50 border-2 border-pink-200 hover:border-pink-400 hover:shadow-lg transition-all transform hover:scale-105"
+            className="flex flex-col items-center justify-center gap-2 p-6 rounded-2xl bg-gradient-to-br from-pink-50 to-orange-50 border-2 border-pink-200 hover:border-pink-400 hover:shadow-lg transition-all transform hover:scale-105 w-32 h-32"
             aria-label="Телефон"
           >
             <PhoneIcon className="h-10 w-10 text-pink-400" />
-            <span className="text-sm text-gray-700 font-medium">0899037420</span>
+            <span className="text-sm text-gray-700 font-medium text-center">0899037420</span>
           </a>
         </div>
       </div>

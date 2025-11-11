@@ -4,6 +4,7 @@ import Stripe from "stripe";
 import Image from "next/image";
 import { Button } from "./ui/button";
 import { useCartStore } from "@/store/cart-store";
+import { useState } from "react";
 
 interface Props {
   product: Stripe.Product;
@@ -12,6 +13,8 @@ interface Props {
 export const ProductDetail = ({ product }: Props) => {
   const { addItem } = useCartStore();
   const price = product.default_price as Stripe.Price;
+  const [isAdded, setIsAdded] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false);
 
   const onAddItem = () => {
     addItem({
@@ -21,6 +24,20 @@ export const ProductDetail = ({ product }: Props) => {
       imageUrl: product.images ? product.images[0] : null,
       quantity: 1,
     });
+    
+    // Trigger animation
+    setIsAnimating(true);
+    setIsAdded(true);
+    
+    // Reset animation after it completes
+    setTimeout(() => {
+      setIsAnimating(false);
+    }, 600);
+    
+    // Reset added state after showing message
+    setTimeout(() => {
+      setIsAdded(false);
+    }, 2000);
   };
 
   return (
@@ -46,12 +63,16 @@ export const ProductDetail = ({ product }: Props) => {
             {(price.unit_amount / 100).toFixed(2)} лв.
           </p>
         )}
-        <Button 
-          onClick={onAddItem} 
-          className="bg-gradient-to-r from-pink-400 to-orange-300 text-white hover:from-pink-500 hover:to-orange-400 rounded-full px-8 py-4 text-lg font-semibold shadow-lg hover:shadow-xl transition-all transform hover:scale-105"
-        >
-          Добави в количката
-        </Button>
+        <div className="relative">
+          <Button 
+            onClick={onAddItem} 
+            className={`bg-pink-400 text-white hover:bg-pink-500 rounded-full px-8 py-4 text-lg font-semibold shadow-lg hover:shadow-xl transition-all ${
+              isAnimating ? 'scale-95' : 'transform hover:scale-105'
+            }`}
+          >
+            {isAdded ? '✓ Добавено!' : 'Добави в количката'}
+          </Button>
+        </div>
       </div>
     </div>
   );

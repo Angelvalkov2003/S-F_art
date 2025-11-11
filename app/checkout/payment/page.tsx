@@ -6,6 +6,7 @@ import { useCartStore } from "@/store/cart-store";
 import { checkoutAction } from "../checkout-action";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 interface ShippingData {
   firstName: string;
@@ -18,9 +19,10 @@ interface ShippingData {
 }
 
 export default function PaymentPage() {
-  const { items } = useCartStore();
+  const { items, clearCart } = useCartStore();
   const router = useRouter();
   const [shippingData, setShippingData] = useState<ShippingData | null>(null);
+  const [isProcessingCashOnDelivery, setIsProcessingCashOnDelivery] = useState(false);
 
   useEffect(() => {
     // Get shipping data from sessionStorage
@@ -36,6 +38,46 @@ export default function PaymentPage() {
     (acc, item) => acc + item.price * item.quantity,
     0
   );
+
+  const handleCashOnDelivery = async () => {
+    if (!shippingData || items.length === 0) return;
+
+    setIsProcessingCashOnDelivery(true);
+
+    try {
+      const emailPayload = {
+        firstName: shippingData.firstName,
+        lastName: shippingData.lastName,
+        email: shippingData.email,
+        phone: shippingData.phone,
+        city: shippingData.city,
+        postalCode: shippingData.postalCode,
+        econtOffice: shippingData.econtOffice,
+        items: items,
+        total: total,
+      };
+
+      const response = await fetch("/api/send-cash-on-delivery-email", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(emailPayload),
+      });
+
+      // Clear cart and sessionStorage
+      clearCart();
+      sessionStorage.removeItem("shippingData");
+      sessionStorage.removeItem("orderItems");
+
+      // Redirect to success page with cash on delivery flag
+      router.push("/success?payment=cash-on-delivery");
+    } catch (error) {
+      console.error("[Payment Page] Error sending cash on delivery email:", error);
+      setIsProcessingCashOnDelivery(false);
+      alert("Възникна грешка. Моля, опитайте отново.");
+    }
+  };
 
   if (items.length === 0 || !shippingData) {
     return (
@@ -97,26 +139,54 @@ export default function PaymentPage() {
                 </li>
               ))}
             </ul>
-            <div className="mt-4 border-t pt-2 text-lg font-semibold mb-4">
+            <div className="mt-4 border-t pt-2 text-lg font-semibold mb-6">
               Общо: {(total / 100).toFixed(2)} лв.
             </div>
-            <form
-              action={checkoutAction}
-              onSubmit={(e) => {
-                // Save items to sessionStorage before redirecting to Stripe
-                sessionStorage.setItem("orderItems", JSON.stringify(items));
-              }}
-            >
-              <input type="hidden" name="items" value={JSON.stringify(items)} />
-              <input
-                type="hidden"
-                name="shippingData"
-                value={JSON.stringify(shippingData)}
-              />
-              <Button type="submit" variant="default" className="w-full">
-                Продължи към плащане
+            
+            <div className="space-y-4">
+              <p className="text-lg font-semibold text-gray-800 mb-4">
+                Изберете начин на плащане
+              </p>
+              
+              <form
+                action={checkoutAction}
+                onSubmit={(e) => {
+                  // Save items to sessionStorage before redirecting to Stripe
+                  sessionStorage.setItem("orderItems", JSON.stringify(items));
+                }}
+              >
+                <input type="hidden" name="items" value={JSON.stringify(items)} />
+                <input
+                  type="hidden"
+                  name="shippingData"
+                  value={JSON.stringify(shippingData)}
+                />
+                <Button 
+                  type="submit" 
+                  variant="default"
+                  className="w-full"
+                >
+                  Плащане с карта
+                </Button>
+              </form>
+              
+              <Button
+                onClick={handleCashOnDelivery}
+                disabled={isProcessingCashOnDelivery}
+                variant="default"
+                className="w-full"
+              >
+                {isProcessingCashOnDelivery ? "Обработва се..." : "Наложен платеж и капаро по EasyPay"}
               </Button>
-            </form>
+              
+              <Button
+                onClick={() => router.push("/checkout/shipping")}
+                variant="outline"
+                className="w-full"
+              >
+                Назад
+              </Button>
+            </div>
           </CardContent>
         </Card>
       </div>
