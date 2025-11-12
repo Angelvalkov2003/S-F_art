@@ -59,6 +59,18 @@ export const ProductList = ({ products }: Props) => {
     }
   };
 
+  // Филтриране на типовете, за които има поне един продукт
+  const availableTypes = useMemo(() => {
+    const typesSet = new Set<string>();
+    products.forEach((product) => {
+      const productType = product.metadata?.productType;
+      if (productType) {
+        typesSet.add(productType);
+      }
+    });
+    return productTypes.filter((type) => typesSet.has(type));
+  }, [products]);
+
   const filteredAndSortedProducts = useMemo(() => {
     // Филтриране по тип
     let filtered = products.filter((product) => {
@@ -149,7 +161,7 @@ export const ProductList = ({ products }: Props) => {
             >
               Всички продукти
             </button>
-            {productTypes.map((type) => (
+            {availableTypes.map((type) => (
               <button
                 key={type}
                 onClick={() => {
