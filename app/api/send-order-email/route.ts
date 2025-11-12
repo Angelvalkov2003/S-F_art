@@ -112,9 +112,12 @@ export async function POST(request: Request) {
       </div>
     `;
 
+    const fromEmail = process.env.RESEND_FROM_EMAIL || 'avoex@resend.dev';
+    const toEmail = process.env.RESEND_TO_EMAIL || 'avoex.contact@gmail.com';
+
     const { data, error } = await resend.emails.send({
-      from: 'avoex@resend.dev',
-      to: 'avoex.contact@gmail.com',
+      from: fromEmail,
+      to: toEmail,
       subject: `S&F Art - Нова успешна поръчка от ${firstName} ${lastName}`,
       html: htmlContent,
     });
