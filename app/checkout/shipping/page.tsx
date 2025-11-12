@@ -104,9 +104,16 @@ export default function ShippingPage() {
           </CardHeader>
           <CardContent>
             <ul className="space-y-3">
-              {items.map((item) => (
-                <li key={item.id} className="flex justify-between border-b pb-2">
-                  <span className="font-medium">{item.name}</span>
+              {items.map((item, index) => (
+                <li key={`${item.id}-${index}-${item.childName || ''}`} className="flex justify-between border-b pb-2">
+                  <div className="flex flex-col">
+                    <span className="font-medium">{item.name}</span>
+                    {item.childName && (
+                      <span className="text-sm text-pink-600 font-medium">
+                        Име на детето: {item.childName}
+                      </span>
+                    )}
+                  </div>
                   <span className="font-semibold">
                     {item.quantity} x {((item.price * item.quantity) / 100).toFixed(2)} €
                   </span>

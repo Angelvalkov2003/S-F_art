@@ -5,9 +5,99 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useCartStore } from "@/store/cart-store";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { useState, useEffect } from "react";
+import { CartItem } from "@/store/cart-store";
+
+interface CartItemWithChildNameProps {
+  item: CartItem;
+  index: number;
+  onRemove: () => void;
+  onAdd: () => void;
+  onUpdateChildName: (childName: string | undefined) => void;
+}
+
+function CartItemWithChildName({
+  item,
+  index,
+  onRemove,
+  onAdd,
+  onUpdateChildName,
+}: CartItemWithChildNameProps) {
+  const [childName, setChildName] = useState(item.childName || "");
+
+  // Синхронизиране на state с item.childName при промяна на item
+  useEffect(() => {
+    setChildName(item.childName || "");
+  }, [item.childName]);
+
+  const handleChildNameChange = (value: string) => {
+    setChildName(value);
+    onUpdateChildName(value || undefined);
+  };
+
+  return (
+    <li className="flex flex-col gap-2 border-b-2 border-pink-200 pb-2 relative">
+      <div className="flex justify-between items-start gap-4">
+        {item.imageUrl && (
+          <div className="relative w-16 h-16 rounded-lg overflow-hidden border-2 border-pink-200 flex-shrink-0">
+            <Image
+              src={item.imageUrl}
+              alt={item.name}
+              fill
+              className="object-cover"
+            />
+          </div>
+        )}
+        <div className="flex items-center gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={onRemove}
+            className="border-2 border-pink-300 text-pink-400 hover:bg-pink-50"
+          >
+            –
+          </Button>
+          <span className="text-lg font-semibold">{item.quantity}</span>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={onAdd}
+            className="border-2 border-pink-300 text-pink-400 hover:bg-pink-50"
+          >
+            +
+          </Button>
+        </div>
+      </div>
+      <div className="flex justify-between items-end">
+        <div className="flex flex-col flex-1">
+          <span className="font-medium">{item.name}</span>
+          <div className="mt-2">
+            <label
+              htmlFor={`childName-${index}`}
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
+              Име на детето (опционално)
+            </label>
+            <input
+              id={`childName-${index}`}
+              type="text"
+              value={childName}
+              onChange={(e) => handleChildNameChange(e.target.value)}
+              placeholder="Въведете име на детето"
+              className="w-full rounded-full border-2 border-pink-200 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-pink-300 bg-white text-sm"
+            />
+          </div>
+        </div>
+        <span className="font-semibold whitespace-nowrap ml-4">
+          {((item.price * item.quantity) / 100).toFixed(2)} €
+        </span>
+      </div>
+    </li>
+  );
+}
 
 export default function CheckoutPage() {
-  const { items, removeItem, addItem } = useCartStore();
+  const { items, removeItem, addItem, updateItemChildName } = useCartStore();
   const router = useRouter();
   const total = items.reduce(
     (acc, item) => acc + item.price * item.quantity,
@@ -39,53 +129,15 @@ export default function CheckoutPage() {
         </CardHeader>
         <CardContent>
           <ul className="space-y-4">
-            {items.map((item) => (
-              <li key={item.id} className="flex flex-col gap-2 border-b-2 border-pink-200 pb-2 relative">
-                <div className="flex justify-between items-start gap-4">
-                  {item.imageUrl && (
-                    <div className="relative w-16 h-16 rounded-lg overflow-hidden border-2 border-pink-200 flex-shrink-0">
-                      <Image
-                        src={item.imageUrl}
-                        alt={item.name}
-                        fill
-                        className="object-cover"
-                      />
-                    </div>
-                  )}
-                  <div className="flex items-center gap-2">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => removeItem(item.id)}
-                      className="border-2 border-pink-300 text-pink-400 hover:bg-pink-50"
-                    >
-                      –
-                    </Button>
-                    <span className="text-lg font-semibold">{item.quantity}</span>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => addItem({ ...item, quantity: 1 })}
-                      className="border-2 border-pink-300 text-pink-400 hover:bg-pink-50"
-                    >
-                      +
-                    </Button>
-                  </div>
-                </div>
-                <div className="flex justify-between items-end">
-                  <div className="flex flex-col">
-                    <span className="font-medium">{item.name}</span>
-                    {item.childName && (
-                      <span className="text-sm text-pink-600 font-medium">
-                        Име на детето: {item.childName}
-                      </span>
-                    )}
-                  </div>
-                  <span className="font-semibold whitespace-nowrap">
-                    {((item.price * item.quantity) / 100).toFixed(2)} €
-                  </span>
-                </div>
-              </li>
+            {items.map((item, index) => (
+              <CartItemWithChildName
+                key={`${item.id}-${index}-${item.childName || ''}`}
+                item={item}
+                index={index}
+                onRemove={() => removeItem(item.id)}
+                onAdd={() => addItem({ ...item, quantity: 1 })}
+                onUpdateChildName={(childName) => updateItemChildName(index, childName)}
+              />
             ))}
           </ul>
           <div className="mt-4 border-t border-pink-200 pt-2 text-lg font-semibold text-right">

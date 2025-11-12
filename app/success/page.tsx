@@ -140,7 +140,7 @@ function SuccessPageContent() {
       <div className="text-center mb-8">
         <h1 className="text-5xl font-bold mb-6 bg-gradient-to-r from-pink-400 to-orange-300 bg-clip-text text-transparent">
           {isCashOnDelivery
-            ? "Нашия екип обработва покупката"
+            ? "Нашия екип обработва заявката"
             : "Плащането е успешно!"}
         </h1>
       </div>
@@ -149,11 +149,8 @@ function SuccessPageContent() {
         <div className="space-y-6 text-lg text-gray-700 leading-relaxed text-center">
           {isCashOnDelivery ? (
             <>
-              <p className="text-2xl font-semibold text-gray-800 mb-6">
-                Благодарим ви за покупката.
-              </p>
               <p className="text-xl text-gray-800 mb-4">
-                Човек ще се свърже с вас за да ви обясни процедурата за плащане.
+                Ще се свържем с вас за да продължим с процедурата за закупуване на артикула. Благодарим предварително!
               </p>
             </>
           ) : (
@@ -199,7 +196,11 @@ function SuccessPageContent() {
       <div className="mt-8 text-center">
         <Link
           href="/products"
-          className="inline-flex items-center justify-center rounded-full px-8 py-4 bg-gradient-to-r from-pink-400 to-orange-300 text-white hover:from-pink-500 hover:to-orange-400 shadow-lg hover:shadow-xl transition-all transform hover:scale-105 text-lg font-semibold"
+          className={`inline-flex items-center justify-center rounded-full px-8 py-4 text-white shadow-lg hover:shadow-xl transition-all transform hover:scale-105 text-lg font-semibold ${
+            isCashOnDelivery
+              ? "bg-pink-400 hover:bg-pink-500"
+              : "bg-gradient-to-r from-pink-400 to-orange-300 hover:from-pink-500 hover:to-orange-400"
+          }`}
         >
           Продължи с пазаруването
         </Link>
