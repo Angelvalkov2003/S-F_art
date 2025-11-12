@@ -6,6 +6,7 @@ import { useState, useMemo, useRef, useEffect } from "react";
 import { ArrowsUpDownIcon, FunnelIcon } from "@heroicons/react/24/outline";
 import { Button } from "./ui/button";
 import { productTypes } from "@/data/products";
+import { useSearchParams, useRouter } from "next/navigation";
 
 interface Props {
   products: Stripe.Product[];
@@ -14,13 +15,33 @@ interface Props {
 type SortOption = "default" | "price-asc" | "price-desc" | "name-asc" | "name-desc";
 
 export const ProductList = ({ products }: Props) => {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const typeFromUrl = searchParams.get("type");
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [sortOption, setSortOption] = useState<SortOption>("default");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const [selectedType, setSelectedType] = useState<string | null>(null);
+  const [selectedType, setSelectedType] = useState<string | null>(typeFromUrl);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const filterRef = useRef<HTMLDivElement>(null);
+
+  // Синхронизиране на selectedType с URL параметъра
+  useEffect(() => {
+    const typeParam = searchParams.get("type");
+    setSelectedType(typeParam);
+  }, [searchParams]);
+
+  // Функция за обновяване на URL при промяна на филтъра
+  const handleTypeChange = (type: string | null) => {
+    setSelectedType(type);
+    setIsFilterOpen(false);
+    if (type) {
+      router.push(`/products?type=${encodeURIComponent(type)}`);
+    } else {
+      router.push("/products");
+    }
+  };
 
   // Затваряне на dropdown при клик извън него
   useEffect(() => {
@@ -149,10 +170,7 @@ export const ProductList = ({ products }: Props) => {
             }`}
           >
             <button
-              onClick={() => {
-                setSelectedType(null);
-                setIsFilterOpen(false);
-              }}
+              onClick={() => handleTypeChange(null)}
               className={`w-full text-left px-4 py-3 text-sm transition-colors ${
                 selectedType === null
                   ? "bg-pink-100 text-pink-600 font-semibold"
@@ -164,10 +182,7 @@ export const ProductList = ({ products }: Props) => {
             {availableTypes.map((type) => (
               <button
                 key={type}
-                onClick={() => {
-                  setSelectedType(type);
-                  setIsFilterOpen(false);
-                }}
+                onClick={() => handleTypeChange(type)}
                 className={`w-full text-left px-4 py-3 text-sm transition-colors border-t border-pink-100 ${
                   selectedType === type
                     ? "bg-pink-100 text-pink-600 font-semibold"

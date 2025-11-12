@@ -8,21 +8,32 @@ import {
   HomeIcon,
   ShoppingBagIcon,
   InformationCircleIcon,
+  ChevronDownIcon,
 } from "@heroicons/react/24/outline";
 import { useCartStore } from "@/store/cart-store";
 import { useEffect, useState, useRef } from "react";
 import { Button } from "./ui/button";
+import { getAvailableProductTypes } from "@/data/products";
+
 export const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState<boolean>(false);
+  const [productsDropdownOpen, setProductsDropdownOpen] = useState<boolean>(false);
+  const [mobileProductsDropdownOpen, setMobileProductsDropdownOpen] = useState<boolean>(false);
   const { items } = useCartStore();
   const cartCount = items.reduce((acc, item) => acc + item.quantity, 0);
   const [isAnimating, setIsAnimating] = useState(false);
   const prevCartCountRef = useRef(cartCount);
+  const productsDropdownRef = useRef<HTMLDivElement>(null);
+  const mobileProductsDropdownRef = useRef<HTMLDivElement>(null);
+  
+  // Получаване само на типовете, за които има продукти
+  const availableProductTypes = getAvailableProductTypes();
 
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 768) {
         setMobileOpen(false);
+        setMobileProductsDropdownOpen(false);
       }
     };
 
@@ -30,6 +41,26 @@ export const Navbar = () => {
 
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  // Затваряне на dropdown при клик извън него
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (productsDropdownRef.current && !productsDropdownRef.current.contains(event.target as Node)) {
+        setProductsDropdownOpen(false);
+      }
+      if (mobileProductsDropdownRef.current && !mobileProductsDropdownRef.current.contains(event.target as Node)) {
+        setMobileProductsDropdownOpen(false);
+      }
+    };
+
+    if (productsDropdownOpen || mobileProductsDropdownOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [productsDropdownOpen, mobileProductsDropdownOpen]);
 
   // Animate cart icon when item is added
   useEffect(() => {
@@ -59,13 +90,41 @@ export const Navbar = () => {
             <HomeIcon className="h-5 w-5" />
             Начало
           </Link>
-          <Link
-            href="/products"
-            className="text-pink-400 hover:text-pink-500 transition-colors font-medium flex items-center gap-2"
-          >
-            <ShoppingBagIcon className="h-5 w-5" />
-            Продукти
-          </Link>
+          <div className="relative" ref={productsDropdownRef}>
+            <button
+              onClick={() => setProductsDropdownOpen(!productsDropdownOpen)}
+              className="text-pink-400 hover:text-pink-500 transition-colors font-medium flex items-center gap-2"
+            >
+              <ShoppingBagIcon className="h-5 w-5" />
+              Продукти
+              <ChevronDownIcon className={`h-4 w-4 transition-transform ${productsDropdownOpen ? "rotate-180" : ""}`} />
+            </button>
+            <div
+              className={`absolute left-0 mt-2 w-56 bg-white rounded-2xl shadow-xl border-2 border-pink-200 overflow-hidden z-50 transition-all duration-300 ease-out max-h-96 overflow-y-auto ${
+                productsDropdownOpen
+                  ? "opacity-100 translate-y-0 scale-100"
+                  : "opacity-0 -translate-y-2 scale-95 pointer-events-none"
+              }`}
+            >
+              <Link
+                href="/products"
+                onClick={() => setProductsDropdownOpen(false)}
+                className="block w-full text-left px-4 py-3 text-sm transition-colors text-gray-700 hover:bg-pink-50"
+              >
+                Всички продукти
+              </Link>
+              {availableProductTypes.map((type) => (
+                <Link
+                  key={type}
+                  href={`/products?type=${encodeURIComponent(type)}`}
+                  onClick={() => setProductsDropdownOpen(false)}
+                  className="block w-full text-left px-4 py-3 text-sm transition-colors border-t border-pink-100 text-gray-700 hover:bg-pink-50"
+                >
+                  {type}
+                </Link>
+              ))}
+            </div>
+          </div>
           <Link
             href="/checkout"
             className="text-pink-400 hover:text-pink-500 transition-colors font-medium flex items-center gap-2"
@@ -166,15 +225,51 @@ export const Navbar = () => {
                 Начало
               </Link>
             </li>
-            <li>
-              <Link
-                href="/products"
-                className="block text-pink-400 hover:text-pink-500 transition-colors font-medium py-2 rounded-lg hover:bg-pink-100 px-3 flex items-center gap-2"
-                onClick={() => setMobileOpen(false)}
+            <li ref={mobileProductsDropdownRef}>
+              <button
+                onClick={() => setMobileProductsDropdownOpen(!mobileProductsDropdownOpen)}
+                className="w-full text-left text-pink-400 hover:text-pink-500 transition-colors font-medium py-2 rounded-lg hover:bg-pink-100 px-3 flex items-center justify-between gap-2"
               >
-                <ShoppingBagIcon className="h-5 w-5" />
-                Продукти
-              </Link>
+                <div className="flex items-center gap-2">
+                  <ShoppingBagIcon className="h-5 w-5" />
+                  Продукти
+                </div>
+                <ChevronDownIcon className={`h-4 w-4 transition-transform ${mobileProductsDropdownOpen ? "rotate-180" : ""}`} />
+              </button>
+              <div
+                className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                  mobileProductsDropdownOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+                }`}
+              >
+                <ul className="pl-6 pt-2 space-y-1">
+                  <li>
+                    <Link
+                      href="/products"
+                      className="block text-pink-400 hover:text-pink-500 transition-colors font-medium py-2 rounded-lg hover:bg-pink-100 px-3"
+                      onClick={() => {
+                        setMobileOpen(false);
+                        setMobileProductsDropdownOpen(false);
+                      }}
+                    >
+                      Всички продукти
+                    </Link>
+                  </li>
+                  {availableProductTypes.map((type) => (
+                    <li key={type}>
+                      <Link
+                        href={`/products?type=${encodeURIComponent(type)}`}
+                        className="block text-pink-400 hover:text-pink-500 transition-colors font-medium py-2 rounded-lg hover:bg-pink-100 px-3"
+                        onClick={() => {
+                          setMobileOpen(false);
+                          setMobileProductsDropdownOpen(false);
+                        }}
+                      >
+                        {type}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </li>
             <li>
               <Link
