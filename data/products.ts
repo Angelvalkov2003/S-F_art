@@ -4,381 +4,176 @@ import Stripe from "stripe";
 export const ceramicProducts: Stripe.Product[] = [
   {
     id: "ceramic-001",
-    object: "product",
-    active: true,
-    name: "Керамична ваза - Модерен дизайн",
-    description: "Елегантна керамична ваза с модерен дизайн, идеална за всяка стая. Изработена от висококачествена глина с гладка повърхност.",
+    name: "Лампа Елха",
+    description: "Тази настолна лампа е изработена изцяло от висококачествена гипсокерамика, която придава минималистичен и същевременно артистичен вид. Захранва се с AA батерии, което я прави напълно преносима и удобна за използване без кабели. Височината ѝ е 35 см — идеална за бюро, нощно шкафче или акцентна масичка.",
     images: [
-      "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&h=800&fit=crop",
-      "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&h=800&fit=crop"
+      "https://res.cloudinary.com/dbnzqvlfs/image/upload/v1762943141/580562895_870072662260201_436249875154846824_n_ejaroj.jpg",
     ],
     metadata: {
-      category: "ceramic",
-      material: "clay"
+      productType: "Коледна колекция"
     },
     default_price: {
-      id: "price-ceramic-001",
-      object: "price",
-      active: true,
-      currency: "bgn",
-      unit_amount: 4500, // 45.00 BGN
-      type: "one_time",
+      unit_amount: 5000, // 45.00 BGN
     } as Stripe.Price,
-    created: Date.now(),
-    updated: Date.now(),
-    livemode: false,
-    marketing_features: [],
-    package_dimensions: null,
-    shippable: null,
-    statement_descriptor: null,
-    tax_code: null,
-    type: "good",
-    unit_label: null,
-    url: null,
-  } as Stripe.Product,
+  } as unknown as Stripe.Product,
   {
-    id: "ceramic-002",
-    object: "product",
-    active: true,
-    name: "Керамична чаша - Ръчно изработена",
-    description: "Уникална ръчно изработена керамична чаша с оригинален дизайн. Перфектна за кафе или чай.",
+    id: "ceramic-006",
+    name: "Коледна Лампа",
+    description: "Елегантна настолна лампа, изработена изцяло от висококачествена гипсокерамика, която придава модерен и стилен акцент на всяко помещение. Работи с батерии тип AA, което я прави напълно безжична и удобна за поставяне навсякъде — върху бюро, нощно шкафче или декоративна маса. С височина 35 см, тя е перфектното съчетание между функционалност и естетика.",
     images: [
-      "https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?w=800&h=800&fit=crop"
+      "https://res.cloudinary.com/dbnzqvlfs/image/upload/v1762945994/582329844_1150849643703556_4382923824319225368_n_w94s6s.jpg",
     ],
     metadata: {
-      category: "ceramic",
-      material: "clay",
-      handmade: "true"
+      productType: "Коледна колекция"
     },
     default_price: {
-      id: "price-ceramic-002",
-      object: "price",
-      active: true,
-      currency: "bgn",
-      unit_amount: 2500, // 25.00 BGN
-      type: "one_time",
+      unit_amount: 5000, // 50.00 BGN
     } as Stripe.Price,
-    created: Date.now(),
-    updated: Date.now(),
-    livemode: false,
-    marketing_features: [],
-    package_dimensions: null,
-    shippable: null,
-    statement_descriptor: null,
-    tax_code: null,
-    type: "good",
-    unit_label: null,
-    url: null,
-  } as Stripe.Product,
+  } as unknown as Stripe.Product,
   {
-    id: "ceramic-003",
-    object: "product",
-    active: true,
-    name: "Керамичен комплект - 4 чинии",
-    description: "Елегантен комплект от 4 керамични чинии с минималистичен дизайн. Подходящи за всекидневна употреба.",
+    id: "ceramic-007",
+    name: "Лампа Шапка",
+    description: "Очарователна настолна лампа с уникален дизайн в стил шапка, изработена изцяло от висококачествена гипсокерамика. Този причудлив и стилен аксесоар добавя топлина и уют към всяко пространство. Работи с батерии тип AA, което я прави напълно преносима и безжична — идеална за поставяне навсякъде без ограничения от кабели. С височина 25 см, тя е перфектният размер за бюро, нощно шкафче или като декоративен елемент, който създава приятна и топла светлина.",
     images: [
-      "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=800&fit=crop"
+      "https://res.cloudinary.com/dbnzqvlfs/image/upload/v1762945994/583032016_824743246813985_4445566583622011678_n_krzfce.jpg",
     ],
     metadata: {
-      category: "ceramic",
-      material: "clay",
-      set: "4 pieces"
+      productType: "Коледна колекция"
     },
     default_price: {
-      id: "price-ceramic-003",
-      object: "price",
-      active: true,
-      currency: "bgn",
-      unit_amount: 6800, // 68.00 BGN
-      type: "one_time",
+      unit_amount: 3500, // 35.00 BGN
     } as Stripe.Price,
-    created: Date.now(),
-    updated: Date.now(),
-    livemode: false,
-    marketing_features: [],
-    package_dimensions: null,
-    shippable: null,
-    statement_descriptor: null,
-    tax_code: null,
-    type: "good",
-    unit_label: null,
-    url: null,
-  } as Stripe.Product,
+  } as unknown as Stripe.Product,
   {
-    id: "ceramic-004",
-    object: "product",
-    active: true,
-    name: "Керамичен салфетник",
-    description: "Практичен и стилен керамичен салфетник за вашата трапезна маса. Лесен за почистване и издръжлив.",
+    id: "ceramic-008",
+    name: "Коледна табелка",
+    description: "Елегантна коледна табелка, изработена изцяло от висококачествена гипсокерамика, която добавя специален коледен акцент към вашия дом. Този декоративен елемент създава уютна и празнична атмосфера, като същевременно служи като функционална лампа. Работи с батерии тип AA, което я прави напълно безжична и удобна за поставяне навсякъде — на стена, маса или като акцентен елемент. С размер 30 см, тя е идеалният избор за украса на всяка стая по време на коледните празници, създавайки топла и приветлива светлина.",
     images: [
-      "https://images.unsplash.com/photo-1600298881974-6be191ceeda1?w=800&h=800&fit=crop"
+      "https://res.cloudinary.com/dbnzqvlfs/image/upload/v1762946396/582059735_1773724916645262_4698062667624610535_n_m7lx6h.jpg",
     ],
     metadata: {
-      category: "ceramic",
-      material: "clay"
+      productType: "Коледна колекция"
     },
     default_price: {
-      id: "price-ceramic-004",
-      object: "price",
-      active: true,
-      currency: "bgn",
-      unit_amount: 1800, // 18.00 BGN
-      type: "one_time",
+      unit_amount: 3000, // 30.00 BGN
     } as Stripe.Price,
-    created: Date.now(),
-    updated: Date.now(),
-    livemode: false,
-    marketing_features: [],
-    package_dimensions: null,
-    shippable: null,
-    statement_descriptor: null,
-    tax_code: null,
-    type: "good",
-    unit_label: null,
-    url: null,
-  } as Stripe.Product,
-  {
-    id: "ceramic-005",
-    object: "product",
-    active: true,
-    name: "Керамична купа - Голяма",
-    description: "Голяма керамична купа, идеална за салати, супи или като декоративен елемент. Изработена с внимание към детайла.",
-    images: [
-      "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&h=800&fit=crop"
-    ],
-    metadata: {
-      category: "ceramic",
-      material: "clay",
-      size: "large"
-    },
-    default_price: {
-      id: "price-ceramic-005",
-      object: "price",
-      active: true,
-      currency: "bgn",
-      unit_amount: 3200, // 32.00 BGN
-      type: "one_time",
-    } as Stripe.Price,
-    created: Date.now(),
-    updated: Date.now(),
-    livemode: false,
-    marketing_features: [],
-    package_dimensions: null,
-    shippable: null,
-    statement_descriptor: null,
-    tax_code: null,
-    type: "good",
-    unit_label: null,
-    url: null,
-  } as Stripe.Product,
+  } as unknown as Stripe.Product,
 ];
 
 // Хардкодирани продукти - Лампи
 export const lampProducts: Stripe.Product[] = [
   {
-    id: "lamp-001",
-    object: "product",
-    active: true,
-    name: "Настолна лампа - Модерна LED",
-    description: "Стилна настолна лампа с LED осветление. Регулируема яркост и топла светлина за уютна атмосфера.",
+    id: "lamp-009",
+    name: "Лампа цвете с агънце",
+    description: "Очарователна настолна лампа с уникален дизайн на цвете с агънце, изработена изцяло от висококачествена гипсокерамика. Този причудлив и стилен аксесоар добавя топлина и уют към всяко пространство, създавайки приятна и романтична атмосфера. Работи с батерии тип AA, което я прави напълно безжична и преносима — идеална за поставяне навсякъде без ограничения от кабели. С размери 23×28 см, тя е перфектният размер за бюро, нощно шкафче или като декоративен елемент, който създава топла и приветлива светлина, добавяйки елегантност и уют към вашия дом.",
     images: [
-      "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=800&h=800&fit=crop"
+      "https://res.cloudinary.com/dbnzqvlfs/image/upload/v1762946396/581998735_1469566104133892_4440692572089228627_n_fo1lrw.jpg",
     ],
     metadata: {
-      category: "lamp",
-      type: "desk",
-      lighting: "LED"
+      productType: "Настолни лампи"
     },
     default_price: {
-      id: "price-lamp-001",
-      object: "price",
-      active: true,
-      currency: "bgn",
-      unit_amount: 8900, // 89.00 BGN
-      type: "one_time",
+      unit_amount: 4500, // 45.00 BGN
     } as Stripe.Price,
-    created: Date.now(),
-    updated: Date.now(),
-    livemode: false,
-    marketing_features: [],
-    package_dimensions: null,
-    shippable: null,
-    statement_descriptor: null,
-    tax_code: null,
-    type: "good",
-    unit_label: null,
-    url: null,
-  } as Stripe.Product,
+  } as unknown as Stripe.Product,
   {
-    id: "lamp-002",
-    object: "product",
-    active: true,
-    name: "Подова лампа - Индустриален стил",
-    description: "Висококачествена подова лампа в индустриален стил. Перфектна за модерни интериори.",
+    id: "lamp-010",
+    name: "Лампа с Фея",
+    description: "Вълшебна настолна лампа с очарователен дизайн на фея, изработена изцяло от висококачествена гипсокерамика. Този уникален и причудлив аксесоар добавя магия и уют към всяко пространство, създавайки приятна и романтична атмосфера, която пренася в свят на приказки. Работи с батерии тип AA, което я прави напълно безжична и преносима — идеална за поставяне навсякъде без ограничения от кабели. С размери 23×28 см, тя е перфектният размер за бюро, нощно шкафче или като декоративен елемент, който създава топла и приветлива светлина, добавяйки елегантност, магия и уют към вашия дом.",
     images: [
-      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=800&fit=crop"
+      "https://res.cloudinary.com/dbnzqvlfs/image/upload/v1762946398/583025884_856957893446946_6429343365330585936_n_co4bjc.jpg",
     ],
     metadata: {
-      category: "lamp",
-      type: "floor",
-      style: "industrial"
+      productType: "Настолни лампи"
     },
     default_price: {
-      id: "price-lamp-002",
-      object: "price",
-      active: true,
-      currency: "bgn",
-      unit_amount: 12500, // 125.00 BGN
-      type: "one_time",
+      unit_amount: 5000, // 50.00 BGN
     } as Stripe.Price,
-    created: Date.now(),
-    updated: Date.now(),
-    livemode: false,
-    marketing_features: [],
-    package_dimensions: null,
-    shippable: null,
-    statement_descriptor: null,
-    tax_code: null,
-    type: "good",
-    unit_label: null,
-    url: null,
-  } as Stripe.Product,
+  } as unknown as Stripe.Product,
   {
-    id: "lamp-003",
-    object: "product",
-    active: true,
-    name: "Таванна лампа - Минималистична",
-    description: "Елегантна таванна лампа с минималистичен дизайн. Създава приятна и равномерна светлина.",
+    id: "lamp-011",
+    name: "Лампа цвете със слонче",
+    description: "Очарователна настолна лампа с уникален дизайн на цвете със слонче, изработена изцяло от висококачествена гипсокерамика. Този причудлив и стилен аксесоар добавя топлина и уют към всяко пространство, създавайки приятна и романтична атмосфера, която съчетава елегантността на цветето с игривостта на слончето. Работи с батерии тип AA, което я прави напълно безжична и преносима — идеална за поставяне навсякъде без ограничения от кабели. С размери 23×28 см, тя е перфектният размер за бюро, нощно шкафче или като декоративен елемент, който създава топла и приветлива светлина, добавяйки елегантност, уют и малко приказка към вашия дом.",
     images: [
-      "https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?w=800&h=800&fit=crop"
+      "https://res.cloudinary.com/dbnzqvlfs/image/upload/v1762946399/582729510_1678040753574429_4411785952482965129_n_wfpbft.jpg",
     ],
     metadata: {
-      category: "lamp",
-      type: "ceiling",
-      style: "minimalist"
+      productType: "Настолни лампи"
     },
     default_price: {
-      id: "price-lamp-003",
-      object: "price",
-      active: true,
-      currency: "bgn",
-      unit_amount: 7500, // 75.00 BGN
-      type: "one_time",
+      unit_amount: 5000, // 50.00 BGN
     } as Stripe.Price,
-    created: Date.now(),
-    updated: Date.now(),
-    livemode: false,
-    marketing_features: [],
-    package_dimensions: null,
-    shippable: null,
-    statement_descriptor: null,
-    tax_code: null,
-    type: "good",
-    unit_label: null,
-    url: null,
-  } as Stripe.Product,
+  } as unknown as Stripe.Product,
   {
-    id: "lamp-004",
-    object: "product",
-    active: true,
-    name: "Ночна лампа - Детска стая",
-    description: "Мяка и уютна нощна лампа, идеална за детска стая. Безопасна и енергоспестяваща.",
+    id: "lamp-012",
+    name: "Лампа къщичка",
+    description: "Очарователна настолна лампа с уникален дизайн на къщичка, изработена изцяло от висококачествена гипсокерамика. Този причудлив и стилен аксесоар добавя топлина и уют към всяко пространство, създавайки приятна и романтична атмосфера, която пренася в свят на приказки и уютни домове. Работи с батерии тип AA, което я прави напълно безжична и преносима — идеална за поставяне навсякъде без ограничения от кабели. С размери 25×27 см, тя е перфектният размер за бюро, нощно шкафче или като декоративен елемент, който създава топла и приветлива светлина, добавяйки елегантност, уют и малко приказка към вашия дом.",
     images: [
-      "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=800&h=800&fit=crop"
+      "https://res.cloudinary.com/dbnzqvlfs/image/upload/v1762946399/582112560_734616219664452_3211945832122285308_n_fcruss.jpg",
     ],
     metadata: {
-      category: "lamp",
-      type: "bedside",
-      target: "children"
+      productType: "Настолни лампи"
     },
     default_price: {
-      id: "price-lamp-004",
-      object: "price",
-      active: true,
-      currency: "bgn",
-      unit_amount: 4200, // 42.00 BGN
-      type: "one_time",
-    } as Stripe.Price,
-    created: Date.now(),
-    updated: Date.now(),
-    livemode: false,
-    marketing_features: [],
-    package_dimensions: null,
-    shippable: null,
-    statement_descriptor: null,
-    tax_code: null,
-    type: "good",
-    unit_label: null,
-    url: null,
-  } as Stripe.Product,
-  {
-    id: "lamp-005",
-    object: "product",
-    active: true,
-    name: "Лампа за четене - Класическа",
-    description: "Класическа лампа за четене с регулируем ъгъл и интензитет. Перфектна за работно място или спалня.",
-    images: [
-      "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=800&h=800&fit=crop"
-    ],
-    metadata: {
-      category: "lamp",
-      type: "reading",
-      adjustable: "true"
-    },
-    default_price: {
-      id: "price-lamp-005",
-      object: "price",
-      active: true,
-      currency: "bgn",
       unit_amount: 5500, // 55.00 BGN
-      type: "one_time",
     } as Stripe.Price,
-    created: Date.now(),
-    updated: Date.now(),
-    livemode: false,
-    marketing_features: [],
-    package_dimensions: null,
-    shippable: null,
-    statement_descriptor: null,
-    tax_code: null,
-    type: "good",
-    unit_label: null,
-    url: null,
-  } as Stripe.Product,
+  } as unknown as Stripe.Product,
   {
-    id: "lamp-006",
-    object: "product",
-    active: true,
-    name: "Декоративна лампа - Скандинавски стил",
-    description: "Красива декоративна лампа в скандинавски стил. Създава уютна и топла атмосфера.",
+    id: "lamp-013",
+    name: "Лампа мече с количка",
+    description: "Очарователна настолна лампа с уникален дизайн на мече с количка, изработена изцяло от висококачествена гипсокерамика. Този причудлив и стилен аксесоар добавя топлина и уют към всяко пространство, създавайки приятна и романтична атмосфера, която съчетава игривостта на мечето с нежността на количката. Работи с батерии тип AA, което я прави напълно безжична и преносима — идеална за поставяне навсякъде без ограничения от кабели. С размери 20×25 см, тя е перфектният размер за бюро, нощно шкафче или като декоративен елемент, който създава топла и приветлива светлина, добавяйки елегантност, уют и малко приказка към вашия дом.",
     images: [
-      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=800&fit=crop"
+      "https://res.cloudinary.com/dbnzqvlfs/image/upload/v1762946399/582422164_906308639225634_9062376427094014112_n_llj3gq.jpg",
     ],
     metadata: {
-      category: "lamp",
-      type: "decorative",
-      style: "scandinavian"
+      productType: "Настолни лампи"
     },
     default_price: {
-      id: "price-lamp-006",
-      object: "price",
-      active: true,
-      currency: "bgn",
-      unit_amount: 9800, // 98.00 BGN
-      type: "one_time",
+      unit_amount: 4000, // 40.00 BGN
     } as Stripe.Price,
-    created: Date.now(),
-    updated: Date.now(),
-    livemode: false,
-    marketing_features: [],
-    package_dimensions: null,
-    shippable: null,
-    statement_descriptor: null,
-    tax_code: null,
-    type: "good",
-    unit_label: null,
-    url: null,
-  } as Stripe.Product,
+  } as unknown as Stripe.Product,
+  {
+    id: "lamp-014",
+    name: "Лампа плюшено мече",
+    description: "Очарователна настолна лампа с уникален дизайн на плюшено мече, изработена изцяло от висококачествена гипсокерамика. Този причудлив и стилен аксесоар може да бъде персонализиран с родилни данни, което я прави идеален подарък за рождени дни, годишнини или други специални поводи. Работи с батерии тип AA, което я прави напълно безжична и преносима — идеална за поставяне навсякъде без ограничения от кабели. С размери 20×25 см, тя е перфектният размер за бюро, нощно шкафче или като декоративен елемент, който създава топла и приветлива светлина, добавяйки елегантност, уют и малко приказка към вашия дом.",
+    images: [
+      "https://res.cloudinary.com/dbnzqvlfs/image/upload/v1762946396/582032526_1943309816587255_4307194625090522064_n_garo48.jpg",
+    ],
+    metadata: {
+      productType: "Настолни лампи"
+    },
+    default_price: {
+      unit_amount: 4500, // 45.00 BGN
+    } as Stripe.Price,
+  } as unknown as Stripe.Product,
+  {
+    id: "lamp-015",
+    name: "Лампа Сънчо",
+    description: "Вълшебна настолна лампа с уникален дизайн на сънчо, изработена изцяло от висококачествена гипсокерамика. Този причудлив и стилен аксесоар може да бъде персонализиран с родилни данни, което я прави идеален подарък за рождени дни, годишнини или други специални поводи. Работи с батерии тип AA, което я прави напълно безжична и преносима — идеална за поставяне навсякъде без ограничения от кабели. С размери 27×33 см, тя е по-голямата версия на този стилен модел, която създава по-силна и топла светлина, добавяйки елегантност, уют и малко приказка към вашия дом.",
+    images: [
+      "https://res.cloudinary.com/dbnzqvlfs/image/upload/v1762946396/580522630_3110217439139218_8358503349867857313_n_ztzkiz.jpg",
+    ],
+    metadata: {
+      productType: "Настолни лампи"
+    },
+    default_price: {
+      unit_amount: 6000, // 60.00 BGN
+    } as Stripe.Price,
+  } as unknown as Stripe.Product,
+  {
+    id: "lamp-016",
+    name: "Лампа жирафче със слонче",
+    description: "Очарователна настолна лампа с уникален дизайн на жирафче със слонче, изработена изцяло от висококачествена гипсокерамика. Този причудлив и стилен аксесоар може да бъде персонализиран с родилни данни, което я прави идеален подарък за рождени дни, годишнини или други специални поводи. Работи с батерии тип AA, което я прави напълно безжична и преносима — идеална за поставяне навсякъде без ограничения от кабели. С размери 20×25 см, тя е перфектният размер за бюро, нощно шкафче или като декоративен елемент, който създава топла и приветлива светлина, добавяйки елегантност, уют и малко приказка към вашия дом.",
+    images: [
+      "https://res.cloudinary.com/dbnzqvlfs/image/upload/v1762946396/582014527_1798704857437841_3161585968422901034_n_yrohrr.jpg",
+    ],
+    metadata: {
+      productType: "Настолни лампи"
+    },
+    default_price: {
+      unit_amount: 4500, // 45.00 BGN
+    } as Stripe.Price,
+  } as unknown as Stripe.Product,
 ];
 
 // Комбиниран списък с всички продукти
@@ -408,6 +203,37 @@ export function getProductsList(limit?: number) {
 // Helper функция за намиране на продукт по ID
 export function getProductById(id: string): Stripe.Product | null {
   return allProducts.find((product) => product.id === id) || null;
+}
+
+// Всички типове продукти
+export const productTypes = [
+  "Настолни лампи",
+  "Лампи за стена",
+  "Лампи за влюбени",
+  "Табелки за стая",
+  "Кубчета с име",
+  "Подаръци за гости",
+  "Творчески комплекти",
+  "Рамки за снимки",
+  "Коледна колекция",
+] as const;
+
+// Helper функция за получаване на продукти по тип
+export function getProductsByType(type: string): Stripe.Product[] {
+  return allProducts.filter(
+    (product) => product.metadata?.productType === type
+  );
+}
+
+// Helper функция за получаване на всички продукти групирани по тип
+export function getProductsByTypeGrouped(): Record<string, Stripe.Product[]> {
+  const grouped: Record<string, Stripe.Product[]> = {};
+  
+  productTypes.forEach((type) => {
+    grouped[type] = getProductsByType(type);
+  });
+  
+  return grouped;
 }
 
 

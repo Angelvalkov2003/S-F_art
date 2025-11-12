@@ -3,8 +3,9 @@
 import Stripe from "stripe";
 import { ProductCard } from "./product-card";
 import { useState, useMemo, useRef, useEffect } from "react";
-import { ArrowsUpDownIcon } from "@heroicons/react/24/outline";
+import { ArrowsUpDownIcon, FunnelIcon } from "@heroicons/react/24/outline";
 import { Button } from "./ui/button";
+import { productTypes } from "@/data/products";
 
 interface Props {
   products: Stripe.Product[];
@@ -16,7 +17,10 @@ export const ProductList = ({ products }: Props) => {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [sortOption, setSortOption] = useState<SortOption>("default");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [selectedType, setSelectedType] = useState<string | null>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const filterRef = useRef<HTMLDivElement>(null);
 
   // Затваряне на dropdown при клик извън него
   useEffect(() => {
@@ -24,16 +28,19 @@ export const ProductList = ({ products }: Props) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setIsDropdownOpen(false);
       }
+      if (filterRef.current && !filterRef.current.contains(event.target as Node)) {
+        setIsFilterOpen(false);
+      }
     };
 
-    if (isDropdownOpen) {
+    if (isDropdownOpen || isFilterOpen) {
       document.addEventListener("mousedown", handleClickOutside);
     }
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [isDropdownOpen]);
+  }, [isDropdownOpen, isFilterOpen]);
 
   const getSortLabel = (option: SortOption) => {
     switch (option) {
@@ -53,8 +60,19 @@ export const ProductList = ({ products }: Props) => {
   };
 
   const filteredAndSortedProducts = useMemo(() => {
-    // Филтриране
+    // Филтриране по тип
     let filtered = products.filter((product) => {
+      if (selectedType) {
+        const productType = product.metadata?.productType;
+        if (productType !== selectedType) {
+          return false;
+        }
+      }
+      return true;
+    });
+
+    // Филтриране по търсене
+    filtered = filtered.filter((product) => {
       const term = searchTerm.toLowerCase();
       const nameMatch = product.name.toLowerCase().includes(term);
       const descriptionMatch = product.description
@@ -88,7 +106,7 @@ export const ProductList = ({ products }: Props) => {
     }
 
     return filtered;
-  }, [products, searchTerm, sortOption]);
+  }, [products, searchTerm, sortOption, selectedType]);
 
   return (
     <div>
@@ -100,7 +118,56 @@ export const ProductList = ({ products }: Props) => {
           placeholder="Търси продукти..."
           className="w-full max-w-md rounded-full border-2 border-pink-200 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-pink-300 bg-white"
         />
-        <div className="relative self-end sm:self-auto" ref={dropdownRef}>
+        <div className="flex gap-2 self-end sm:self-auto">
+        <div className="relative" ref={filterRef}>
+          <Button
+            onClick={() => setIsFilterOpen(!isFilterOpen)}
+            className={`bg-pink-400 text-white hover:bg-pink-500 rounded-full shadow-md hover:shadow-lg transition-all px-4 py-2 h-auto gap-2 ${
+              selectedType ? "ring-2 ring-pink-300" : ""
+            }`}
+          >
+            <FunnelIcon className="h-4 w-4" />
+            <span className="text-sm">Филтър</span>
+          </Button>
+          <div
+            className={`absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-xl border-2 border-pink-200 overflow-hidden z-50 transition-all duration-300 ease-out max-h-96 overflow-y-auto ${
+              isFilterOpen
+                ? "opacity-100 translate-y-0 scale-100"
+                : "opacity-0 -translate-y-2 scale-95 pointer-events-none"
+            }`}
+          >
+            <button
+              onClick={() => {
+                setSelectedType(null);
+                setIsFilterOpen(false);
+              }}
+              className={`w-full text-left px-4 py-3 text-sm transition-colors ${
+                selectedType === null
+                  ? "bg-pink-100 text-pink-600 font-semibold"
+                  : "text-gray-700 hover:bg-pink-50"
+              }`}
+            >
+              Всички продукти
+            </button>
+            {productTypes.map((type) => (
+              <button
+                key={type}
+                onClick={() => {
+                  setSelectedType(type);
+                  setIsFilterOpen(false);
+                }}
+                className={`w-full text-left px-4 py-3 text-sm transition-colors border-t border-pink-100 ${
+                  selectedType === type
+                    ? "bg-pink-100 text-pink-600 font-semibold"
+                    : "text-gray-700 hover:bg-pink-50"
+                }`}
+              >
+                {type}
+              </button>
+            ))}
+          </div>
+        </div>
+        <div className="relative" ref={dropdownRef}>
           <Button
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
             className="bg-pink-400 text-white hover:bg-pink-500 rounded-full shadow-md hover:shadow-lg transition-all px-4 py-2 h-auto gap-2"
@@ -181,6 +248,7 @@ export const ProductList = ({ products }: Props) => {
               Име: Я-А
             </button>
           </div>
+        </div>
         </div>
       </div>
       <ul className="mt-6 grid grid-cols-2 gap-2 sm:gap-4 sm:grid-cols-2 lg:grid-cols-3">

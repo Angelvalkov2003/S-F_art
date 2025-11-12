@@ -47,16 +47,15 @@ export const ProductCard = ({ product }: Props) => {
   };
 
   return (
-    <Card className="group hover:shadow-2xl transition-all duration-300 py-0 h-full flex flex-col border-2 border-pink-200 gap-0 rounded-2xl overflow-hidden bg-gradient-to-b from-white to-pink-50 hover:border-pink-300 hover:scale-105">
+    <Card className="py-0 h-full flex flex-col border-2 border-pink-200 gap-0 rounded-2xl overflow-hidden bg-gradient-to-b from-white to-pink-50 transition-transform duration-300 hover:scale-[1.03]">
       <Link href={`/products/${product.id}`} className="block">
         {product.images && product.images[0] && (
           <div className="relative aspect-square w-full overflow-hidden">
             <Image
               src={product.images[0]}
               alt={product.name}
-              layout="fill"
-              objectFit="cover"
-              className="group-hover:opacity-90 transition-opacity duration-300 group-hover:scale-110"
+              fill
+              style={{ objectFit: "cover" }}
             />
           </div>
         )}
