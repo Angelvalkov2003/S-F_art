@@ -46,7 +46,7 @@ export async function POST(request: Request) {
     const productsList = items
       .map(
         (item: any) =>
-          `<li>${item.name} - Количество: ${item.quantity} - Цена: ${(item.price * item.quantity / 100).toFixed(2)} лв.</li>`
+          `<li>${item.name} - Количество: ${item.quantity} - Цена: ${(item.price * item.quantity / 100).toFixed(2)} евро.</li>`
       )
       .join('');
 
@@ -93,7 +93,7 @@ export async function POST(request: Request) {
 
         <div style="margin-top: 20px; padding: 15px; background-color: #f0f0f0; border-radius: 5px;">
           <p style="margin: 0; font-size: 18px; font-weight: bold; color: #333;">
-            Обща сума: <span style="color: #4CAF50;">${(total / 100).toFixed(2)} лв.</span>
+            Обща сума: <span style="color: #4CAF50;">${(total / 100).toFixed(2)} евро.</span>
           </p>
         </div>
 
