@@ -4,7 +4,7 @@ import Stripe from "stripe";
 export const ceramicProducts: Stripe.Product[] = [
   {
     id: "ceramic-001",
-    name: "Лампа Елха",
+    name: "Лампа Елха (зелена)",
     description: "Тази настолна лампа е изработена изцяло от висококачествена гипсокерамика, която придава минималистичен и същевременно артистичен вид. Захранва се с AA батерии, което я прави напълно преносима и удобна за използване без кабели. Височината ѝ е 35 см — идеална за бюро, нощно шкафче или акцентна масичка.",
     images: [
       "https://res.cloudinary.com/dbnzqvlfs/image/upload/v1762943141/580562895_870072662260201_436249875154846824_n_ejaroj.jpg",
@@ -13,12 +13,12 @@ export const ceramicProducts: Stripe.Product[] = [
       productType: "Коледна колекция"
     },
     default_price: {
-      unit_amount: 5000, // 45.00 BGN
+      unit_amount: 1276, // 12.76 EUR (25.00 BGN)
     } as Stripe.Price,
   } as unknown as Stripe.Product,
   {
     id: "ceramic-006",
-    name: "Коледна Лампа",
+    name: "Лампа Елха (бяла)",
     description: "Елегантна настолна лампа, изработена изцяло от висококачествена гипсокерамика, която придава модерен и стилен акцент на всяко помещение. Работи с батерии тип AA, което я прави напълно безжична и удобна за поставяне навсякъде — върху бюро, нощно шкафче или декоративна маса. С височина 35 см, тя е перфектното съчетание между функционалност и естетика.",
     images: [
       "https://res.cloudinary.com/dbnzqvlfs/image/upload/v1762945994/582329844_1150849643703556_4382923824319225368_n_w94s6s.jpg",
@@ -27,12 +27,12 @@ export const ceramicProducts: Stripe.Product[] = [
       productType: "Коледна колекция"
     },
     default_price: {
-      unit_amount: 5000, // 50.00 BGN
+      unit_amount: 1276, // 12.76 EUR (25.00 BGN)
     } as Stripe.Price,
   } as unknown as Stripe.Product,
   {
     id: "ceramic-007",
-    name: "Лампа Шапка",
+    name: "Лампа Коледна Шапка",
     description: "Очарователна настолна лампа с уникален дизайн в стил шапка, изработена изцяло от висококачествена гипсокерамика. Този причудлив и стилен аксесоар добавя топлина и уют към всяко пространство. Работи с батерии тип AA, което я прави напълно преносима и безжична — идеална за поставяне навсякъде без ограничения от кабели. С височина 25 см, тя е перфектният размер за бюро, нощно шкафче или като декоративен елемент, който създава приятна и топла светлина.",
     images: [
       "https://res.cloudinary.com/dbnzqvlfs/image/upload/v1762945994/583032016_824743246813985_4445566583622011678_n_krzfce.jpg",
@@ -41,7 +41,7 @@ export const ceramicProducts: Stripe.Product[] = [
       productType: "Коледна колекция"
     },
     default_price: {
-      unit_amount: 3500, // 35.00 BGN
+      unit_amount: 1020, // 10.20 EUR (20.00 BGN)
     } as Stripe.Price,
   } as unknown as Stripe.Product,
   {
@@ -55,7 +55,7 @@ export const ceramicProducts: Stripe.Product[] = [
       productType: "Коледна колекция"
     },
     default_price: {
-      unit_amount: 3000, // 30.00 BGN
+      unit_amount: 765, // 7.65 EUR (15.00 BGN)
     } as Stripe.Price,
   } as unknown as Stripe.Product,
 ];
@@ -73,7 +73,7 @@ export const lampProducts: Stripe.Product[] = [
       productType: "Настолни лампи"
     },
     default_price: {
-      unit_amount: 4500, // 45.00 BGN
+      unit_amount: 1276, // 12.76 EUR (25.00 BGN)
     } as Stripe.Price,
   } as unknown as Stripe.Product,
   {
@@ -87,7 +87,7 @@ export const lampProducts: Stripe.Product[] = [
       productType: "Настолни лампи"
     },
     default_price: {
-      unit_amount: 5000, // 50.00 BGN
+      unit_amount: 1276, // 12.76 EUR (25.00 BGN)
     } as Stripe.Price,
   } as unknown as Stripe.Product,
   {
@@ -101,7 +101,7 @@ export const lampProducts: Stripe.Product[] = [
       productType: "Настолни лампи"
     },
     default_price: {
-      unit_amount: 5000, // 50.00 BGN
+      unit_amount: 1276, // 12.76 EUR (25.00 BGN)
     } as Stripe.Price,
   } as unknown as Stripe.Product,
   {
@@ -115,7 +115,7 @@ export const lampProducts: Stripe.Product[] = [
       productType: "Настолни лампи"
     },
     default_price: {
-      unit_amount: 5500, // 55.00 BGN
+      unit_amount: 1531, // 15.31 EUR (30.00 BGN)
     } as Stripe.Price,
   } as unknown as Stripe.Product,
   {
@@ -129,7 +129,7 @@ export const lampProducts: Stripe.Product[] = [
       productType: "Настолни лампи"
     },
     default_price: {
-      unit_amount: 4000, // 40.00 BGN
+      unit_amount: 1020, // 10.20 EUR (20.00 BGN)
     } as Stripe.Price,
   } as unknown as Stripe.Product,
   {
@@ -143,7 +143,7 @@ export const lampProducts: Stripe.Product[] = [
       productType: "Настолни лампи"
     },
     default_price: {
-      unit_amount: 4500, // 45.00 BGN
+      unit_amount: 1276, // 12.76 EUR (25.00 BGN)
     } as Stripe.Price,
   } as unknown as Stripe.Product,
   {
@@ -157,7 +157,7 @@ export const lampProducts: Stripe.Product[] = [
       productType: "Настолни лампи"
     },
     default_price: {
-      unit_amount: 6000, // 60.00 BGN
+      unit_amount: 1531, // 15.31 EUR (30.00 BGN)
     } as Stripe.Price,
   } as unknown as Stripe.Product,
   {
@@ -171,7 +171,7 @@ export const lampProducts: Stripe.Product[] = [
       productType: "Настолни лампи"
     },
     default_price: {
-      unit_amount: 4500, // 45.00 BGN
+      unit_amount: 1276, // 12.76 EUR (25.00 BGN)
     } as Stripe.Price,
   } as unknown as Stripe.Product,
   {
@@ -185,7 +185,7 @@ export const lampProducts: Stripe.Product[] = [
       productType: "Лампи за стена"
     },
     default_price: {
-      unit_amount: 7000, // 70.00 BGN
+      unit_amount: 1786, // 17.86 EUR (35.00 BGN)
     } as Stripe.Price,
   } as unknown as Stripe.Product,
   {
@@ -199,7 +199,7 @@ export const lampProducts: Stripe.Product[] = [
       productType: "Лампи за стена"
     },
     default_price: {
-      unit_amount: 7000, // 70.00 BGN
+      unit_amount: 1786, // 17.86 EUR (35.00 BGN)
     } as Stripe.Price,
   } as unknown as Stripe.Product,
   {
@@ -213,7 +213,7 @@ export const lampProducts: Stripe.Product[] = [
       productType: "Лампи за стена"
     },
     default_price: {
-      unit_amount: 7000, // 70.00 BGN
+      unit_amount: 1786, // 17.86 EUR (35.00 BGN)
     } as Stripe.Price,
   } as unknown as Stripe.Product,
   {
@@ -227,7 +227,7 @@ export const lampProducts: Stripe.Product[] = [
       productType: "Лампи за стена"
     },
     default_price: {
-      unit_amount: 7000, // 70.00 BGN
+      unit_amount: 1786, // 17.86 EUR (35.00 BGN)
     } as Stripe.Price,
   } as unknown as Stripe.Product,
   {
@@ -241,7 +241,7 @@ export const lampProducts: Stripe.Product[] = [
       productType: "Лампи за стена"
     },
     default_price: {
-      unit_amount: 7500, // 75.00 BGN
+      unit_amount: 4082, // 40.82 EUR (80.00 BGN)
     } as Stripe.Price,
   } as unknown as Stripe.Product,
   {
@@ -255,7 +255,7 @@ export const lampProducts: Stripe.Product[] = [
       productType: "Лампи за стена"
     },
     default_price: {
-      unit_amount: 7000, // 70.00 BGN
+      unit_amount: 1786, // 17.86 EUR (35.00 BGN)
     } as Stripe.Price,
   } as unknown as Stripe.Product,
   {
@@ -269,7 +269,7 @@ export const lampProducts: Stripe.Product[] = [
       productType: "Лампи за стена"
     },
     default_price: {
-      unit_amount: 7500, // 75.00 BGN
+      unit_amount: 4082, // 40.82 EUR (80.00 BGN)
     } as Stripe.Price,
   } as unknown as Stripe.Product,
   {
@@ -283,7 +283,7 @@ export const lampProducts: Stripe.Product[] = [
       productType: "Лампи за стена"
     },
     default_price: {
-      unit_amount: 7500, // 75.00 BGN
+      unit_amount: 4082, // 40.82 EUR (80.00 BGN)
     } as Stripe.Price,
   } as unknown as Stripe.Product,
   {
@@ -297,7 +297,7 @@ export const lampProducts: Stripe.Product[] = [
       productType: "Лампи за стена"
     },
     default_price: {
-      unit_amount: 7500, // 75.00 BGN
+      unit_amount: 4082, // 40.82 EUR (80.00 BGN)
     } as Stripe.Price,
   } as unknown as Stripe.Product,
   {
@@ -311,7 +311,7 @@ export const lampProducts: Stripe.Product[] = [
       productType: "Лампи за стена"
     },
     default_price: {
-      unit_amount: 7500, // 75.00 BGN
+      unit_amount: 4082, // 40.82 EUR (80.00 BGN)
     } as Stripe.Price,
   } as unknown as Stripe.Product,
   {
@@ -325,7 +325,7 @@ export const lampProducts: Stripe.Product[] = [
       productType: "Лампи за стена"
     },
     default_price: {
-      unit_amount: 7500, // 75.00 BGN
+      unit_amount: 4082, // 40.82 EUR (80.00 BGN)
     } as Stripe.Price,
   } as unknown as Stripe.Product,
   {
@@ -339,7 +339,7 @@ export const lampProducts: Stripe.Product[] = [
       productType: "Лампи за стена"
     },
     default_price: {
-      unit_amount: 7000, // 70.00 BGN
+      unit_amount: 1786, // 17.86 EUR (35.00 BGN)
     } as Stripe.Price,
   } as unknown as Stripe.Product,
   {
@@ -353,7 +353,7 @@ export const lampProducts: Stripe.Product[] = [
       productType: "Лампи за стена"
     },
     default_price: {
-      unit_amount: 7000, // 70.00 BGN
+      unit_amount: 1786, // 17.86 EUR (35.00 BGN)
     } as Stripe.Price,
   } as unknown as Stripe.Product,
   {
@@ -367,7 +367,7 @@ export const lampProducts: Stripe.Product[] = [
       productType: "Лампи за стена"
     },
     default_price: {
-      unit_amount: 7000, // 70.00 BGN
+      unit_amount: 1786, // 17.86 EUR (35.00 BGN)
     } as Stripe.Price,
   } as unknown as Stripe.Product,
   {
@@ -381,7 +381,7 @@ export const lampProducts: Stripe.Product[] = [
       productType: "Лампи за стена"
     },
     default_price: {
-      unit_amount: 7000, // 70.00 BGN
+      unit_amount: 1786, // 17.86 EUR (35.00 BGN)
     } as Stripe.Price,
   } as unknown as Stripe.Product,
   {
@@ -395,7 +395,7 @@ export const lampProducts: Stripe.Product[] = [
       productType: "Лампи за стена"
     },
     default_price: {
-      unit_amount: 7500, // 75.00 BGN
+      unit_amount: 4082, // 40.82 EUR (80.00 BGN)
     } as Stripe.Price,
   } as unknown as Stripe.Product,
   {
@@ -409,7 +409,7 @@ export const lampProducts: Stripe.Product[] = [
       productType: "Лампи за стена"
     },
     default_price: {
-      unit_amount: 7000, // 70.00 BGN
+      unit_amount: 1786, // 17.86 EUR (35.00 BGN)
     } as Stripe.Price,
   } as unknown as Stripe.Product,
   {
@@ -423,7 +423,7 @@ export const lampProducts: Stripe.Product[] = [
       productType: "Лампи за стена"
     },
     default_price: {
-      unit_amount: 7000, // 70.00 BGN
+      unit_amount: 1786, // 17.86 EUR (35.00 BGN)
     } as Stripe.Price,
   } as unknown as Stripe.Product,
 ];
