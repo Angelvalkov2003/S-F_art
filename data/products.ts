@@ -428,10 +428,29 @@ export const lampProducts: Stripe.Product[] = [
   } as unknown as Stripe.Product,
 ];
 
+// Тестови продукти
+export const testProducts: Stripe.Product[] = [
+  {
+    id: "test-001",
+    name: "Тест",
+    description: "Тест продукт за тестване на функционалностите. Тест описание. Тест детайли.",
+    images: [
+      "https://res.cloudinary.com/dbnzqvlfs/image/upload/v1762943141/580562895_870072662260201_436249875154846824_n_ejaroj.jpg",
+    ],
+    metadata: {
+      productType: "Тест"
+    },
+    default_price: {
+      unit_amount: 100, // 1.00 EUR
+    } as Stripe.Price,
+  } as unknown as Stripe.Product,
+];
+
 // Комбиниран списък с всички продукти
 export const allProducts: Stripe.Product[] = [
   ...ceramicProducts,
   ...lampProducts,
+  ...testProducts,
 ];
 
 // Експорт по категории
@@ -468,6 +487,7 @@ export const productTypes = [
   "Творчески комплекти",
   "Рамки за снимки",
   "Коледна колекция",
+  "Тест",
 ] as const;
 
 // Helper функция за получаване на продукти по тип
