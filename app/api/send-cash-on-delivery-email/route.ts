@@ -46,7 +46,7 @@ export async function POST(request: Request) {
     const productsList = items
       .map((item: any) => {
         const childNameText = item.childName ? ` - Име на детето: ${item.childName}` : '';
-        return `<li>${item.name}${childNameText} - Количество: ${item.quantity} - Цена: ${(item.price * item.quantity / 100).toFixed(2)} лв.</li>`;
+        return `<li>${item.name}${childNameText} - Количество: ${item.quantity} - Цена: ${(item.price * item.quantity / 100).toFixed(2)} евро.</li>`;
       })
       .join('');
 

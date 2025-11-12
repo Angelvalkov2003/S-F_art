@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useCartStore } from "@/store/cart-store";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, memo, useCallback } from "react";
 import { CartItem } from "@/store/cart-store";
 
 interface CartItemWithChildNameProps {
@@ -16,7 +16,7 @@ interface CartItemWithChildNameProps {
   onUpdateChildName: (childName: string | undefined) => void;
 }
 
-function CartItemWithChildName({
+const CartItemWithChildName = memo(function CartItemWithChildName({
   item,
   index,
   onRemove,
@@ -24,16 +24,55 @@ function CartItemWithChildName({
   onUpdateChildName,
 }: CartItemWithChildNameProps) {
   const [childName, setChildName] = useState(item.childName || "");
+  const inputRef = useRef<HTMLInputElement>(null);
+  const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const isFocusedRef = useRef(false);
 
-  // Синхронизиране на state с item.childName при промяна на item
+  // Инициализиране на state само при първо зареждане или промяна на item.id
   useEffect(() => {
-    setChildName(item.childName || "");
-  }, [item.childName]);
+    // Синхронизираме само ако input-ът не е в фокус
+    if (!isFocusedRef.current) {
+      setChildName(item.childName || "");
+    }
+  }, [item.id, item.childName]); // При промяна на item.id или childName (от външен източник)
 
   const handleChildNameChange = (value: string) => {
     setChildName(value);
-    onUpdateChildName(value || undefined);
+    
+    // Изчистваме предишния timer
+    if (debounceTimerRef.current) {
+      clearTimeout(debounceTimerRef.current);
+    }
+    
+    // Създаваме нов timer за debounce, но НЕ обновяваме cart store докато е в фокус
+    // Ще обновим само при blur
   };
+
+  const handleFocus = () => {
+    isFocusedRef.current = true;
+  };
+
+  const handleBlur = () => {
+    isFocusedRef.current = false;
+    
+    // Изчистваме timer-а и обновяваме веднага при blur
+    if (debounceTimerRef.current) {
+      clearTimeout(debounceTimerRef.current);
+      debounceTimerRef.current = null;
+    }
+    
+    // Обновяваме cart store при blur
+    onUpdateChildName(childName || undefined);
+  };
+
+  // Cleanup на timer при unmount
+  useEffect(() => {
+    return () => {
+      if (debounceTimerRef.current) {
+        clearTimeout(debounceTimerRef.current);
+      }
+    };
+  }, []);
 
   return (
     <li className="flex flex-col gap-2 border-b-2 border-pink-200 pb-2 relative">
@@ -79,10 +118,13 @@ function CartItemWithChildName({
               Име на детето (опционално)
             </label>
             <input
+              ref={inputRef}
               id={`childName-${index}`}
               type="text"
               value={childName}
               onChange={(e) => handleChildNameChange(e.target.value)}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
               placeholder="Въведете име на детето"
               className="w-full rounded-full border-2 border-pink-200 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-pink-300 bg-white text-sm"
             />
@@ -94,7 +136,7 @@ function CartItemWithChildName({
       </div>
     </li>
   );
-}
+});
 
 export default function CheckoutPage() {
   const { items, removeItem, addItem, updateItemChildName } = useCartStore();
@@ -102,6 +144,14 @@ export default function CheckoutPage() {
   const total = items.reduce(
     (acc, item) => acc + item.price * item.quantity,
     0
+  );
+
+  // Мемоизиране на функциите за обновяване на child name
+  const handleUpdateChildName = useCallback(
+    (index: number, childName: string | undefined) => {
+      updateItemChildName(index, childName);
+    },
+    [updateItemChildName]
   );
 
   if (items.length === 0) {
@@ -136,7 +186,7 @@ export default function CheckoutPage() {
                 index={index}
                 onRemove={() => removeItem(item.id)}
                 onAdd={() => addItem({ ...item, quantity: 1 })}
-                onUpdateChildName={(childName) => updateItemChildName(index, childName)}
+                onUpdateChildName={(childName) => handleUpdateChildName(index, childName)}
               />
             ))}
           </ul>
